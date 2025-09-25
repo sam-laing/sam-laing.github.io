@@ -1,2 +1,2 @@
-# sam-laing.github.io
-Profile page
+# Sam Laing's Website
+[website](https://sam-laing.github.io)
