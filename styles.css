@@ -9,7 +9,7 @@ body {
     font-family: 'Inter', sans-serif;
     line-height: 1.6;
     color: #e2e8f0;
-    background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 25%, #16213e 50%, #1a1a2e 75%, #0f0f23 100%);
+    background: #0f0f1a;
     min-height: 100vh;
     overflow-x: hidden;
 }
@@ -29,26 +29,21 @@ body {
     backdrop-filter: blur(15px);
     border-radius: 30px;
     padding: 3rem 2rem;
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(100, 116, 139, 0.3);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
     transform: translateY(0);
-    animation: floatIn 1s ease-out, gentleFloat 6s ease-in-out infinite;
-    border: 1px solid rgba(100, 116, 139, 0.2);
+    animation: floatIn 0.8s ease-out;
+    border: 1px solid rgba(100, 116, 139, 0.15);
 }
 
 @keyframes floatIn {
-    0% { 
-        opacity: 0; 
-        transform: translateY(-50px) scale(0.8); 
+    0% {
+        opacity: 0;
+        transform: translateY(-20px);
     }
-    100% { 
-        opacity: 1; 
-        transform: translateY(0) scale(1); 
+    100% {
+        opacity: 1;
+        transform: translateY(0);
     }
-}
-
-@keyframes gentleFloat {
-    0%, 100% { transform: translateY(0px); }
-    50% { transform: translateY(-10px); }
 }
 
 .profile-section {
@@ -64,9 +59,7 @@ body {
     width: 140px;
     height: 140px;
     border-radius: 50%;
-    background: linear-gradient(45deg, #3b82f6, #8b5cf6, #06b6d4, #10b981);
-    background-size: 400% 400%;
-    animation: avatarGlow 3s ease infinite;
+    background: linear-gradient(135deg, #3b82f6, #8b5cf6);
     color: white;
     display: flex;
     align-items: center;
@@ -74,46 +67,23 @@ body {
     font-size: 3rem;
     font-weight: 700;
     margin: 0 auto;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4), 0 0 50px rgba(59, 130, 246, 0.3);
-    border: 2px solid rgba(148, 163, 184, 0.3);
-    cursor: pointer;
-    transition: all 0.3s ease;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(148, 163, 184, 0.2);
+    transition: transform 0.3s ease;
 }
 
 .avatar-placeholder:hover {
-    transform: scale(1.1) rotate(5deg);
-    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25), 0 0 70px rgba(255, 107, 107, 0.5);
-}
-
-@keyframes avatarGlow {
-    0% { 
-        background-position: 0% 50%; 
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4), 0 0 50px rgba(59, 130, 246, 0.3);
-    }
-    50% { 
-        background-position: 100% 50%; 
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4), 0 0 50px rgba(139, 92, 246, 0.4);
-    }
-    100% { 
-        background-position: 0% 50%; 
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4), 0 0 50px rgba(59, 130, 246, 0.3);
-    }
+    transform: scale(1.04);
 }
 
 .name {
     font-size: 3rem;
     font-weight: 700;
     margin-bottom: 0.5rem;
-    background: linear-gradient(45deg, #60a5fa, #a78bfa, #34d399);
+    background: linear-gradient(45deg, #60a5fa, #a78bfa);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    animation: textShimmer 3s ease infinite;
-}
-
-@keyframes textShimmer {
-    0%, 100% { filter: hue-rotate(0deg); }
-    50% { filter: hue-rotate(90deg); }
 }
 
 .title {
@@ -143,10 +113,10 @@ body {
     backdrop-filter: blur(20px);
     border-radius: 30px;
     padding: 3rem;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(100, 116, 139, 0.2);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
     margin-bottom: 2rem;
     animation: slideUp 0.8s ease-out 0.3s both;
-    border: 1px solid rgba(100, 116, 139, 0.2);
+    border: 1px solid rgba(100, 116, 139, 0.15);
 }
 
 @keyframes slideUp {
@@ -188,28 +158,21 @@ body {
     font-size: 2.2rem;
     font-weight: 700;
     margin-bottom: 2rem;
-    background: linear-gradient(45deg, #60a5fa, #a78bfa, #34d399);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    color: #e2e8f0;
     position: relative;
     padding-bottom: 1rem;
     text-align: center;
 }
 
 .section h2::after {
-    content: '✨';
+    content: '';
     position: absolute;
     bottom: 0;
     left: 50%;
     transform: translateX(-50%);
-    font-size: 1.5rem;
-    animation: sparkle 2s ease infinite;
-}
-
-@keyframes sparkle {
-    0%, 100% { transform: translateX(-50%) scale(1) rotate(0deg); }
-    50% { transform: translateX(-50%) scale(1.2) rotate(180deg); }
+    width: 40px;
+    height: 2px;
+    background: rgba(100, 116, 139, 0.4);
 }
 
 .section p {
@@ -480,55 +443,22 @@ body {
 .contact-link {
     display: inline-flex;
     align-items: center;
-    padding: 1rem 2rem;
-    background: linear-gradient(45deg, #3b82f6, #8b5cf6, #06b6d4, #10b981);
-    background-size: 300% 300%;
-    color: white;
+    padding: 0.7rem 1.6rem;
+    background: rgba(51, 65, 85, 0.5);
+    color: #e2e8f0;
     text-decoration: none;
     border-radius: 50px;
-    font-weight: 600;
-    font-size: 1.1rem;
-    transition: all 0.4s ease;
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
-    animation: gradientMove 4s ease infinite;
-    position: relative;
-    overflow: hidden;
-}
-
-.contact-link::before {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 0;
-    height: 0;
-    background: rgba(255, 255, 255, 0.2);
-    border-radius: 50%;
-    transition: all 0.4s ease;
-    transform: translate(-50%, -50%);
-}
-
-.contact-link:hover::before {
-    width: 300px;
-    height: 300px;
-}
-
-@keyframes gradientMove {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
+    font-weight: 500;
+    font-size: 1rem;
+    border: 1px solid rgba(100, 116, 139, 0.3);
+    transition: all 0.25s ease;
 }
 
 .contact-link:hover {
-    transform: translateY(-5px) scale(1.05);
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
-    animation-play-state: paused;
+    transform: translateY(-2px);
+    border-color: rgba(96, 165, 250, 0.6);
+    color: #ffffff;
 }
-
-.contact-link:nth-child(1) { animation-delay: 0s; }
-.contact-link:nth-child(2) { animation-delay: 1s; }
-.contact-link:nth-child(3) { animation-delay: 2s; }
-.contact-link:nth-child(4) { animation-delay: 3s; }
 
 /* Footer styles */
 .footer {
@@ -537,9 +467,9 @@ body {
     background: rgba(30, 41, 59, 0.6);
     backdrop-filter: blur(15px);
     border-radius: 25px;
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
     animation: slideUp 0.8s ease-out 1s both;
-    border: 1px solid rgba(100, 116, 139, 0.2);
+    border: 1px solid rgba(100, 116, 139, 0.15);
 }
 
 .footer p {
