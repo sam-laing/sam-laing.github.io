@@ -177,6 +177,18 @@ body {
     text-align: center;
 }
 
+.main-content a {
+    color: #93c5fd;
+    text-decoration: none;
+    border-bottom: 1px solid rgba(147, 197, 253, 0.3);
+    transition: border-color 0.2s ease, color 0.2s ease;
+}
+
+.main-content a:hover {
+    color: #bfdbfe;
+    border-bottom-color: rgba(147, 197, 253, 0.8);
+}
+
 /* Projects styles */
 .projects-grid {
     display: flex;
