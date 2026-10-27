@@ -1,6 +1,6 @@
 """Turn line art into Fourier epicycle data for the page background.
 
-    python trace.py IMAGE NAME LABEL [--thresh 140] [--blank x0,y0,x1,y1] [--close 0] [--size 700]
+    python trace.py IMAGE NAME LABEL [--thresh 140] [--blank x0,y0,x1,y1] [--close 0] [--size 700] [--edges 120]
 
 Line art -> ink mask -> 1px skeleton -> one walk per stroke -> strokes chained into a single
 closed path with pen-up jumps -> DFT. Writes data/NAME.json and data/NAME.png (a preview of the
@@ -19,9 +19,9 @@ N_SAMPLES = 4096
 
 # ---------- image -> strokes ----------
 
-def ink_mask(path, size=700, thresh=140, blank=(), hollow=6, dot=30):
-    """Dark pixels = ink. `blank` is a list of (x0, y0, x1, y1) fractions to wipe (watermarks).
-    Solid blobs thicker than `hollow` px (shoes, pupils) are reduced to their outlines."""
+def ink_mask(path, size=700, thresh=140, blank=(), hollow=6, dot=30, edges=0):
+    """Dark pixels = ink, or with `edges` (a Canny threshold) the boundaries between colour regions.
+    `blank` is a list of (x0, y0, x1, y1) fractions to wipe (watermarks, backgrounds)."""
     import cv2
     img = cv2.imread(str(path), cv2.IMREAD_UNCHANGED)
     if img is None:
@@ -33,13 +33,31 @@ def ink_mask(path, size=700, thresh=140, blank=(), hollow=6, dot=30):
         img = (img[:, :, :3] * a + 255 * (1 - a)).astype(np.uint8)
     s = size / max(img.shape[:2])
     img = cv2.resize(img, None, fx=s, fy=s, interpolation=cv2.INTER_AREA if s < 1 else cv2.INTER_CUBIC)
-    mask = (img.max(axis=2) < thresh).astype(np.uint8)          # near-black in every channel (ignores e.g. a red tie)
+    if edges:                                                    # coloured renders: boundaries between flat colour regions
+        smooth = cv2.bilateralFilter(img, 9, 60, 9)
+        e = np.max([cv2.Canny(smooth[:, :, c], edges // 2, edges) for c in range(3)], axis=0)
+        mask = (e > 0).astype(np.uint8)
+        hollow = 0                                               # edges are already thin
+    else:
+        mask = (img.max(axis=2) < thresh).astype(np.uint8)      # near-black in every channel (ignores e.g. a red tie)
     h, w = mask.shape
     for x0, y0, x1, y1 in blank:
         mask[int(y0 * h):int(y1 * h), int(x0 * w):int(x1 * w)] = 0
+    if hollow:
+        mask = _hollow(mask, hollow)
+    return _clean(mask, dot)
+
+
+def _hollow(mask, hollow):
+    """Solid blobs thicker than `hollow` px (shoes, pupils) are reduced to their outlines."""
+    import cv2
     k = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (2 * hollow + 1, 2 * hollow + 1))
     core = cv2.erode(mask, k)                                    # only survives inside thick blobs
-    mask = mask & (1 - cv2.dilate(core, cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (2 * hollow - 3, 2 * hollow - 3))))
+    return mask & (1 - cv2.dilate(core, cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (2 * hollow - 3, 2 * hollow - 3))))
+
+
+def _clean(mask, dot):
+    import cv2
     n, lab, stats, _ = cv2.connectedComponentsWithStats(mask, connectivity=8)
     keep = np.zeros(n, bool)
     keep[1:] = stats[1:, cv2.CC_STAT_AREA] >= 25                 # drop specks
@@ -172,10 +190,11 @@ def main():
     ap.add_argument("--blank", action="append", default=[], help="x0,y0,x1,y1 fractions to wipe (watermarks)")
     ap.add_argument("--close", type=int, default=0, help="closing kernel (px) to bridge gaps in pencil lines")
     ap.add_argument("--hollow", type=int, default=6, help="solid blobs thicker than this become outlines")
+    ap.add_argument("--edges", type=int, default=0, help="Canny threshold: trace colour boundaries instead of dark ink")
     ap.add_argument("--size", type=int, default=700, help="working resolution (longest side, px)")
     a = ap.parse_args()
     blank = [tuple(map(float, b.split(","))) for b in a.blank]
-    walks = strokes(ink_mask(a.image, size=a.size, thresh=a.thresh, blank=blank, hollow=a.hollow, dot=a.size // 25), a.min_len, a.close)
+    walks = strokes(ink_mask(a.image, size=a.size, thresh=a.thresh, blank=blank, hollow=a.hollow, dot=a.size // 25, edges=a.edges), a.min_len, a.close)
     xy, pen = resample(*chain(walks))
     save(a.name, a.label, *fourier(xy, pen, a.terms))
 

@@ -41,7 +41,7 @@
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
   }
   function X(x) { return W / 2 + R * x; }
-  function Y(y) { return H / 2 - R * y - 10; }
+  function Y(y) { return H / 2 - R * y; }
 
   function colors() {
     var css = getComputedStyle(document.documentElement);
@@ -87,11 +87,6 @@
       ctx.beginPath(); ctx.arc(X(x), Y(y), 2.5, 0, 2 * Math.PI); ctx.fill();
     }
 
-    // caption
-    ctx.globalAlpha = 0.55 * alpha; ctx.fillStyle = col.muted;
-    ctx.font = '500 11px "JetBrains Mono", ui-monospace, monospace';
-    ctx.textAlign = 'center';
-    ctx.fillText(c.label + ' · ' + c.coeffs.length + ' epicycles', W / 2, H - 6);
     ctx.globalAlpha = 1;
   }
 
@@ -121,7 +116,9 @@
   }
 
   resize();
-  window.addEventListener('resize', function () { resize(); if (reduce) still(); });
+  var onResize = function () { resize(); if (reduce) still(); };
+  if ('ResizeObserver' in window) new ResizeObserver(onResize).observe(cv);   // the figure changes size with the layout
+  else window.addEventListener('resize', onResize);
   if (reduce) {
     still();
     setInterval(function () { idx = (idx + 1) % chars.length; still(); }, 8000);

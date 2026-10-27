@@ -23,7 +23,6 @@
   --rule: #262a33;
   --accent: #f5a524;
   --accent-soft: rgba(245, 165, 36, .14);
-  --shadow: 0 12px 28px -14px rgba(0, 0, 0, .8);
   --mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
   --sans: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
 }
@@ -36,7 +35,6 @@
   --rule: #e6e3dc;
   --accent: #b45309;
   --accent-soft: rgba(180, 83, 9, .1);
-  --shadow: 0 12px 28px -14px rgba(180, 83, 9, .45);
 }
 
 /* ---------- base ---------- */
@@ -58,15 +56,17 @@ a:hover { text-decoration: underline; text-underline-offset: 3px; }
 p { margin: .55rem 0; }
 h2 {
   font-family: var(--mono);
-  font-size: 1.05rem;
-  font-weight: 700;
-  letter-spacing: .02em;
-  margin: 2.4rem 0 .9rem;
+  font-size: .8rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: .14em;
+  color: var(--muted);
+  margin: 2.6rem 0 1rem;
   display: flex;
   align-items: center;
-  gap: .6rem;
+  gap: .9rem;
 }
-h2::before { content: "//"; color: var(--accent); }
+h2::after { content: ""; flex: 1; height: 1px; background: var(--rule); }
 .col > h2:first-child { margin-top: 0; }
 
 .wrap {
@@ -99,7 +99,7 @@ h2::before { content: "//"; color: var(--accent); }
   width: 32px; height: 32px;
   padding: 0;
   border: 1px solid var(--rule);
-  border-radius: 8px;
+  border-radius: 2px;
   background: var(--card);
   color: var(--fg);
   cursor: pointer;
@@ -110,11 +110,11 @@ h2::before { content: "//"; color: var(--accent); }
 /* ---------- hero ---------- */
 .hero {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  gap: 32px;
-  margin-top: 40px;
+  gap: 36px;
+  margin-top: 48px;
 }
+.hero-text { max-width: 540px; }
 .hero h1 {
   margin: 0;
   font-size: clamp(2.6rem, 6.5vw, 4.4rem);
@@ -135,7 +135,7 @@ h2::before { content: "//"; color: var(--accent); }
   place-items: center;
   width: 40px; height: 40px;
   border: 1px solid var(--rule);
-  border-radius: 10px;
+  border-radius: 2px;
   background: var(--card);
   color: var(--fg);
   transition: color .2s ease, border-color .2s ease, transform .2s ease;
@@ -143,12 +143,11 @@ h2::before { content: "//"; color: var(--accent); }
 .hero-icons a:hover { color: var(--accent); border-color: var(--accent); transform: translateY(-2px); text-decoration: none; }
 .hero-icons svg { width: 19px; height: 19px; }
 .avatar {
-  width: 168px; height: 168px;
+  width: 150px; height: 150px;
   flex: 0 0 auto;
   border-radius: 50%;
   object-fit: cover;
   border: 1px solid var(--rule);
-  box-shadow: 0 0 0 6px var(--accent-soft);
 }
 
 /* ---------- cartoon background: Fourier epicycles (fourier.js, data from trace/trace.py) ---------- */
@@ -163,9 +162,8 @@ h2::before { content: "//"; color: var(--accent); }
 .bg-stage canvas {
   position: absolute;
   top: 0;
-  left: calc(50% + 176px);           /* the gap between the name and the photo */
+  left: calc(50% + 120px);           /* the empty space right of the hero text */
   width: 400px; height: 420px;
-  transform: translateX(-50%);
 }
 
 /* ---------- grid ---------- */
@@ -182,34 +180,13 @@ h2::before { content: "//"; color: var(--accent); }
   padding: 12px 16px 11px;
   background: var(--card);
   border: 1px solid var(--rule);
-  border-radius: 12px;
-  transition: transform .2s ease, border-color .2s ease, background .2s ease, box-shadow .2s ease;
+  border-radius: 2px;
+  transition: border-color .2s ease, background .2s ease;
 }
-.card::before {
-  content: "";
-  position: absolute;
-  left: 0; top: 12px; bottom: 12px;
-  width: 3px;
-  border-radius: 0 3px 3px 0;
-  background: var(--accent);
-  opacity: .75;
-}
-.card:hover { transform: translateY(-2px); border-color: var(--accent); background: var(--card-hover); box-shadow: var(--shadow); }
+.card:hover { border-color: var(--accent); background: var(--card-hover); }
 .card h3 { margin: 0; font-size: .97rem; font-weight: 600; line-height: 1.4; }
 .card .sub { margin: .15rem 0 0; font-size: .86rem; color: var(--muted); line-height: 1.5; }
 .stack { display: grid; gap: 10px; }
-
-/* research areas */
-.area-head { display: flex; align-items: center; gap: 10px; }
-.area-ico {
-  display: grid; place-items: center;
-  width: 30px; height: 30px;
-  flex: 0 0 auto;
-  border-radius: 8px;
-  background: var(--accent-soft);
-  color: var(--accent);
-}
-.area-ico svg { width: 17px; height: 17px; }
 
 /* tags + small buttons */
 .tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: .4rem; }
@@ -217,10 +194,10 @@ h2::before { content: "//"; color: var(--accent); }
   font-family: var(--mono);
   font-size: .7rem;
   font-weight: 500;
-  padding: 1px 8px;
-  border-radius: 999px;
-  background: var(--accent-soft);
-  color: var(--accent);
+  padding: 0 7px;
+  border: 1px solid var(--rule);
+  border-radius: 2px;
+  color: var(--muted);
 }
 .btns { display: flex; flex-wrap: wrap; gap: 6px; margin-top: .55rem; }
 .btns a {
@@ -228,20 +205,25 @@ h2::before { content: "//"; color: var(--accent); }
   font-size: .74rem;
   padding: 1px 10px;
   border: 1px solid var(--accent);
-  border-radius: 6px;
+  border-radius: 2px;
 }
 .btns a:hover { background: var(--accent); color: var(--bg); text-decoration: none; }
+
+/* paper abstracts: three lines, click to read the rest */
+.abstract { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; cursor: pointer; }
+.abstract.open { display: block; }
+.more { padding: 0; border: 0; background: none; font-family: var(--mono); font-size: .74rem; color: var(--accent); cursor: pointer; }
+.more:hover { text-decoration: underline; text-underline-offset: 3px; }
 
 /* bullet points inside cards */
 .pts { margin: .4rem 0 .1rem; padding: 0; list-style: none; }
 .pts li { position: relative; margin: .2rem 0; padding-left: 1rem; font-size: .86rem; line-height: 1.5; color: var(--muted); }
-.pts li::before { content: ""; position: absolute; left: .1rem; top: .62em; width: 5px; height: 5px; border-radius: 50%; background: var(--accent); opacity: .75; }
-.pts b { color: var(--fg); font-weight: 600; }
+.pts li::before { content: ""; position: absolute; left: .1rem; top: .62em; width: 5px; height: 5px; border-radius: 1px; background: var(--accent); opacity: .75; }
 
 /* toolkit */
 .skills { display: grid; gap: 10px; }
 .skills h3 { margin: 0 0 .45rem; font-family: var(--mono); font-size: .76rem; font-weight: 500; color: var(--muted); text-transform: lowercase; }
-.skills .tags { margin: 0; }
+.skills p { margin: 0; font-family: var(--mono); font-size: .8rem; line-height: 1.7; }
 
 /* ---------- timeline ---------- */
 .timeline { position: relative; padding-left: 22px; display: grid; gap: 10px; }
@@ -252,7 +234,7 @@ h2::before { content: "//"; color: var(--accent); }
   left: -22px; top: 17px;
   width: 11px; height: 11px;
   transform: translateX(-50%) translateX(6px);
-  border-radius: 50%;
+  border-radius: 2px;
   background: var(--bg);
   border: 2px solid var(--accent);
   z-index: 1;
@@ -272,7 +254,6 @@ h2::before { content: "//"; color: var(--accent); }
 .tl-row { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
 .when { font-family: var(--mono); font-size: .74rem; font-weight: 500; color: var(--accent); white-space: nowrap; }
 
-
 /* ---------- footer ---------- */
 footer {
   margin-top: 72px;
@@ -290,15 +271,15 @@ footer a:hover { color: var(--accent); }
 
 /* ---------- responsive ---------- */
 @media (max-width: 960px) {
-  .bg-stage canvas { left: auto; right: -40px; transform: none; opacity: .6; }
+  .bg-stage canvas { left: auto; right: -40px; opacity: .6; }
 }
 @media (max-width: 820px) {
   .grid { grid-template-columns: 1fr; margin-top: 48px; }
 }
 @media (max-width: 560px) {
   .wrap { padding: 0 16px 48px; }
-  .hero { flex-direction: column-reverse; align-items: flex-start; margin-top: 16px; }
-  .avatar { width: 112px; height: 112px; }
+  .hero { flex-direction: column; align-items: flex-start; gap: 22px; margin-top: 16px; }
+  .avatar { width: 104px; height: 104px; }
   .topnav { gap: 16px; }
   .tl-row { flex-wrap: wrap; gap: 0 12px; }
   .bg-stage canvas { width: 260px; height: 280px; right: -30px; }
@@ -321,7 +302,8 @@ footer a:hover { color: var(--accent); }
   </nav>
 
   <header class="hero">
-    <div>
+    <img class="avatar" src="../profile_photo.png" alt="Sam Laing">
+    <div class="hero-text">
       <h1>Sam Laing</h1>
       <p class="tagline">ML research engineer · LLM optimization <span class="hl">@</span> OpenEuroLLM · ELLIS Tübingen</p>
       <div class="hero-icons">
@@ -329,55 +311,57 @@ footer a:hover { color: var(--accent); }
         <a href="https://github.com/sam-laing" target="_blank" rel="noopener" aria-label="GitHub" title="GitHub"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.37.5 0 5.78 0 12.29c0 5.2 3.44 9.6 8.21 11.16.6.11.82-.25.82-.56 0-.28-.01-1.02-.02-2-3.34.72-4.04-1.58-4.04-1.58-.55-1.36-1.33-1.73-1.33-1.73-1.09-.73.08-.72.08-.72 1.2.08 1.84 1.22 1.84 1.22 1.07 1.8 2.81 1.28 3.5.98.11-.76.42-1.28.76-1.58-2.67-.3-5.47-1.31-5.47-5.83 0-1.29.47-2.34 1.24-3.17-.13-.3-.54-1.52.12-3.17 0 0 1.01-.32 3.3 1.21a11.6 11.6 0 0 1 6 0c2.29-1.53 3.3-1.21 3.3-1.21.66 1.65.25 2.87.12 3.17.77.83 1.24 1.88 1.24 3.17 0 4.53-2.81 5.53-5.49 5.82.43.36.81 1.08.81 2.18 0 1.58-.01 2.85-.01 3.24 0 .31.21.68.83.56A12.02 12.02 0 0 0 24 12.29C24 5.78 18.63.5 12 .5Z"/></svg></a>
         <a href="https://scholar.google.com/citations?hl=en&amp;view_op=list_works&amp;user=IAvRO34AAAAJ" target="_blank" rel="noopener" aria-label="Google Scholar" title="Google Scholar"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 24a7 7 0 1 1 0-14 7 7 0 0 1 0 14zm0-24L0 9.5l4.838 3.94A8 8 0 0 1 12 9a8 8 0 0 1 7.162 4.44L24 9.5z"/></svg></a>
         <a href="https://www.linkedin.com/in/sam-laing-196403214/" target="_blank" rel="noopener" aria-label="LinkedIn" title="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.34V9h3.42v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg></a>
-        <a href="../cv.pdf" target="_blank" rel="noopener" aria-label="CV" title="CV"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M9 13h6M9 17h6"/></svg></a>
       </div>
     </div>
-    <img class="avatar" src="../profile_photo.png" alt="Sam Laing">
   </header>
 
   <div class="grid">
     <!-- LEFT: about, research interests, papers & projects -->
     <div class="col">
       <h2 id="about">about</h2>
-      <p>I'm a research engineer at <a href="https://openeurollm.eu/" target="_blank" rel="noopener">OpenEuroLLM</a> and the <a href="https://institute-tue.ellis.eu/" target="_blank" rel="noopener">ELLIS Institute Tübingen</a>, working on large-scale multilingual LLM pretraining: optimizers, scaling laws and training efficiency, with Megatron-LM runs across 1,024+ H100s.</p>
-      <p>Before that I spent two years building and deploying production ML systems in fintech at <a href="https://softco.com/" target="_blank" rel="noopener">SoftCo</a>. I studied mathematics at Trinity College Dublin and machine learning at the University of Tübingen.</p>
+      <p>I'm a research engineer at <a href="https://openeurollm.eu/" target="_blank" rel="noopener">OpenEuroLLM</a> and the <a href="https://institute-tue.ellis.eu/" target="_blank" rel="noopener">ELLIS Institute Tübingen</a>, working on LLM pretraining: optimizers, scaling laws, and keeping large training runs efficient and stable.</p>
+      <p>Before that I spent two years as an ML engineer at <a href="https://softco.com/" target="_blank" rel="noopener">SoftCo</a>, automating AP workflows using machine learning. I worked on data pipelining, modeling and deployment. 
+        
+        I studied mathematics at Trinity College Dublin and machine learning at the University of Tübingen.</p>
 
       <h2 id="interests">research interests</h2>
       <div class="stack">
         <div class="card">
-          <div class="area-head">
-            <span class="area-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 19c3-8 5-12 8-12s3 7 6 7 3-4 6-4"/><circle cx="10" cy="7" r="1.2" fill="currentColor"/></svg></span>
-            <h3>Optimizers</h3>
-          </div>
-          <p class="sub">Matrix-aware and adaptive methods (Muon, AdamW) and the training dynamics of transformer pretraining.</p>
+          <h3>Matrix-aware optimizers</h3>
+          <p class="sub">Muon and its variants. why and when orthogonalized and LMO-based updates work. Both theory and in language model pretraining.</p>
         </div>
         <div class="card">
-          <div class="area-head">
-            <span class="area-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M6 6c2 6 6 10 14 11"/></svg></span>
-            <h3>Scaling laws</h3>
-          </div>
-          <p class="sub">Fitting scaling laws to guide compute-optimal model and data sizing for large multilingual LLMs.</p>
+          <h3>LLM pretraining</h3>
+          <p class="sub">Training dynamics of large transformers, mixture-of-experts and linear attention architectures.</p>
+        </div>
+        <div class="card">
+          <h3>Scaling laws</h3>
+          <p class="sub">Predicting how large models will behave from small training runs, predicting optimal hyperparameters and decreasing computational costs.</p>
         </div>
       </div>
 
       <h2 id="projects">papers &amp; projects</h2>
       <div class="stack">
         <div class="card">
+          <div class="tags"><span class="tag">arXiv 2026</span><span class="tag">optimization</span></div>
+          <h3><a href="https://arxiv.org/abs/2610.30280" target="_blank" rel="noopener">A Quadratic Lens on Muon's Polar Update: Benefits, Pitfalls, and the Role of Newton-Schulz</a></h3>
+          <p class="sub">E. Shulgin*, <b>S. Laing*</b>, A. Orvieto, P. Richtárik · *equal contribution</p>
+          <p class="sub abstract">Muon updates matrix-valued parameters along approximately orthogonalized directions and often trains large language models faster than AdamW, yet it remains unclear when and why orthogonalization helps. We study PolarGD, the orthogonalized update at the core of Muon, on matrix quadratics, where optimizers can be analyzed in closed form, and compare update directions under line search to remove the effect of learning-rate tuning. Orthogonalization pays off when the gradient is far from low rank and its largest singular directions see high curvature. PolarGD reaches the minimizer in one step whenever the rows of the error are orthogonal with equal norms, for any Hessian, whereas gradient descent needs all Hessian eigenvalues to be equal; and unlike sign descent, PolarGD is unaffected by rotations of the problem. Over many steps, PolarGD acts as gradient descent preconditioned by the current iterate, so its speed is governed by the conditioning of the iterate rather than of the Hessian. This explains fast regimes as well as a slow one, caused by tiny singular values of the iterate, in which PolarGD is much slower than gradient descent. Finally, the few Newton-Schulz iterations used in Muon treat these tiny singular values as gradient descent does, so fewer iterations can converge faster than exact orthogonalization; in a transformer trained with Muon, about a quarter of the singular values of the attention matrices fall in this regime.</p>
+          <div class="btns"><a href="https://arxiv.org/abs/2610.30280" target="_blank" rel="noopener">arXiv</a><a href="https://arxiv.org/pdf/2610.30280" target="_blank" rel="noopener">PDF</a></div>
+        </div>
+        <div class="card">
           <div class="tags"><span class="tag">arXiv 2025</span><span class="tag">optimization</span></div>
           <h3><a href="https://arxiv.org/abs/2511.20516" target="_blank" rel="noopener">Adam Simplified: Bias Correction Debunked</a></h3>
           <p class="sub"><b>S. Laing</b>, A. Orvieto</p>
-          <p class="sub">Ablations on vision and language tasks show Adam's bias correction gives no gain when hyperparameters are well tuned, and can hurt without a learning-rate schedule.</p>
+          <p class="sub abstract">The Adam optimizer is a cornerstone of modern deep learning, yet the empirical necessity of each of its individual components is often taken for granted. This paper presents a focused investigation into the role of bias-correction, a feature whose contribution remains poorly understood. Through a series of systematic ablations on vision and language modelling tasks, we demonstrate that the conventional wisdom surrounding bias correction is misleading. In particular, we demonstrate that in the optimal hyper-parameter configuration, the inclusion of bias correction leads to no improvement in final test performance. Moreover, unless appropriate learning rate scheduling is implemented, the inclusion of bias correction can sometimes be detrimental to performance. We further reinterpret bias correction as a form of implicit learning rate scheduling whose behaviour is strongly dependent on the choice of smoothing hyper-parameters β<sub>1</sub>, β<sub>2</sub> ∈ [0, 1). Our findings challenge the universal inclusion of this component.</p>
           <div class="btns"><a href="https://arxiv.org/abs/2511.20516" target="_blank" rel="noopener">arXiv</a><a href="https://arxiv.org/pdf/2511.20516" target="_blank" rel="noopener">PDF</a></div>
         </div>
         <div class="card">
-          <div class="tags"><span class="tag">ongoing</span><span class="tag">OpenEuroLLM</span></div>
-          <h3>Muon vs. AdamW at scale</h3>
-          <p class="sub">Leading a benchmark of the Muon optimizer against AdamW to improve pretraining compute efficiency for the consortium's model series.</p>
-        </div>
-        <div class="card">
-          <div class="tags"><span class="tag">MSc thesis</span><span class="tag">Tübingen</span></div>
-          <h3>Adaptive and geometry-aware optimizers for transformer pretraining</h3>
-          <p class="sub">How optimizers like Muon affect pretraining efficiency and training dynamics. Supervised by <a href="http://orvi.altervista.org/" target="_blank" rel="noopener">Antonio Orvieto</a>.</p>
+          <div class="tags"><span class="tag">arXiv 2026</span><span class="tag">scaling laws</span></div>
+          <h3><a href="https://arxiv.org/abs/2609.05016" target="_blank" rel="noopener">Amortizing Scaling Law Construction Costs</a></h3>
+          <p class="sub">A. K. Jha*, D. A. Onuţu*, N. Mallik*, S. Haldar*, <b>S. Laing</b>, N. Ajroldi, S. Liu, J. Vanschoren, A. Klein · *equal contribution</p>
+          <p class="sub abstract">Scaling laws guide the design choices for training large foundation models, but deriving them involves training an exhaustive grid over hyperparameters, token budgets, and parameter counts, which is computationally expensive. Fitting a scaling law, however, only requires the best-loss frontier across compute scales, discarding most of the trained configurations. We propose a framework for efficient scaling law construction that formulates data collection as a Bayesian optimization problem, and introduce metrics for comparing scaling law fitting methods under constrained compute budgets. We find that progressively expanding the compute budget during acquisition, mirroring the compute-ordered evaluation of configurations in practice, substantially improves recovery efficiency. Augmenting the observed configurations with surrogate-fantasized evaluations then recovers the broader experimental grid, allowing accurate scaling law fitting without training every configuration. Together, these can closely match scaling law fits over a full dense grid at computational savings of up to 10–100×.</p>
+          <div class="btns"><a href="https://arxiv.org/abs/2609.05016" target="_blank" rel="noopener">arXiv</a><a href="https://arxiv.org/pdf/2609.05016" target="_blank" rel="noopener">PDF</a></div>
         </div>
         <div class="card">
           <div class="tags"><span class="tag">BA thesis</span><span class="tag">pure maths</span></div>
@@ -396,26 +380,27 @@ footer a:hover { color: var(--accent); }
           <div class="tl-row"><h3>Research Engineer</h3><span class="when">Apr 2026 – now</span></div>
           <p class="sub">OpenEuroLLM · ELLIS Institute Tübingen</p>
           <ul class="pts">
-            <li>Leading a benchmark of <b>Muon vs. AdamW</b> at scale for the consortium's model series.</li>
-            <li>Ran a Megatron-LM pretraining sweep across <b>1,024+ H100s</b>, keeping multi-day jobs stable through NCCL hangs, OOMs and gradient-sync failures.</li>
-            <li>Fitted scaling laws to inform compute-optimal sizing for multilingual LLMs <b>up to 70B parameters</b>.</li>
-            <li>Built real-time monitoring for training runs (loss, gradient norms, throughput).</li>
+            <li>Comparing Muon and AdamW for pretraining.</li>
+            <li>Running pretraining sweeps with Megatron-LM and debugging distributed training issues.</li>
+            <li>Fitting scaling laws for hyperparameters, to set them for large runs from small ones.</li>
+            <li>Building tools to monitor training runs.</li>
           </ul>
         </div></div>
         <div class="tl-item"><div class="card">
           <div class="tl-row"><h3>Research Intern</h3><span class="when">Oct 2025 – Mar 2026</span></div>
           <p class="sub">ELLIS Institute · Max Planck Institute, Tübingen</p>
           <ul class="pts">
-            <li>Studied optimization dynamics in GPT-style pretraining, comparing Muon and AdamW at small and large scale.</li>
+            <li>Research on Muon and matrix-aware optimizers, from theory on simple models to GPT-style pretraining experiments.</li>
           </ul>
         </div></div>
         <div class="tl-item"><div class="card">
           <div class="tl-row"><h3>Machine Learning Engineer</h3><span class="when">Apr 2023 – Apr 2025</span></div>
           <p class="sub">SoftCo · Dublin</p>
           <ul class="pts">
-            <li>Built the core ML IP behind the company's <b>€100M+ acquisition</b> by <a href="https://keensight.com/" target="_blank" rel="noopener">Keensight Capital</a>.</li>
-            <li>Bayesian inference module and multi-label classifier reaching <b>95%+ touchless processing</b> in production.</li>
-            <li>ETL pipelines, data parsers and time-series forecasting to cut cloud compute costs.</li>
+            <li>Built the core ML behind the product ahead of the company's acquisition by <a href="https://keensight.com/" target="_blank" rel="noopener">Keensight Capital</a>.</li>
+            <li>Built and deployed Bayesian inference and multi-label classification models for automated document processing, reaching 95%+ touchless processing in production.</li>
+            <li>Data pipelines and parsers for model training.</li>
+            <li>Time-series forecasting for cloud compute planning.</li>
           </ul>
         </div></div>
       </div>
@@ -423,22 +408,23 @@ footer a:hover { color: var(--accent); }
       <h2 id="education">education</h2>
       <div class="timeline">
         <div class="tl-item now"><div class="card">
-          <div class="tl-row"><h3>MSc Machine Learning</h3><span class="when">2022 – 2025</span></div>
+          <div class="tl-row"><h3>MSc Machine Learning</h3><span class="when">Oct 2022 – Jun 2025</span></div>
           <p class="sub">University of Tübingen · Grade 1.3 (sehr gut)</p>
           <p class="sub">Thesis on adaptive and geometry-aware optimizers, supervised by Antonio Orvieto.</p>
         </div></div>
         <div class="tl-item"><div class="card">
-          <div class="tl-row"><h3>BA Mathematics</h3><span class="when">2018 – 2022</span></div>
+          <div class="tl-row"><h3>BA Mathematics</h3><span class="when">Sep 2018 – Jun 2022</span></div>
           <p class="sub">Trinity College Dublin · First Class Honours</p>
-          <p class="sub">Academic Gold Medal for excellence across all four years.</p>
+          <p class="sub">Trinity College Academic Gold Medal, awarded for academic excellence throughout four years of study.</p>
+          <p class="sub">Thesis on category theory in algebraic topology.</p>
         </div></div>
       </div>
 
       <h2 id="toolkit">toolkit</h2>
       <div class="card skills">
-        <div><h3>training &amp; scaling</h3><div class="tags"><span class="tag">PyTorch</span><span class="tag">Megatron-LM</span><span class="tag">TorchTitan</span><span class="tag">JAX</span><span class="tag">TP / DP / FSDP</span><span class="tag">W&amp;B</span></div></div>
-        <div><h3>systems</h3><div class="tags"><span class="tag">Python</span><span class="tag">Triton</span><span class="tag">CUDA</span><span class="tag">SLURM</span><span class="tag">Docker</span><span class="tag">Linux</span><span class="tag">SQL</span></div></div>
-        <div><h3>theory</h3><div class="tags"><span class="tag">optimization</span><span class="tag">Bayesian inference</span><span class="tag">time series</span><span class="tag">trustworthy ML</span></div></div>
+        <div><h3>training &amp; scaling</h3><p>PyTorch · Megatron-LM · JAX · TP / DP / FSDP · W&amp;B</p></div>
+        <div><h3>systems</h3><p>Python · SLURM · Docker · Linux · SQL</p></div>
+        <div><h3>theory</h3><p>non-convex optimization · non-Euclidean optimization · stochastic optimization · Bayesian inference</p></div>
       </div>
     </div>
   </div>
@@ -470,6 +456,22 @@ footer a:hover { color: var(--accent); }
   });
   paint();
 })();
+</script>
+<script>
+/* expand / collapse paper abstracts */
+document.querySelectorAll('.abstract').forEach(function (p) {
+  var btn = document.createElement('button');
+  btn.type = 'button'; btn.className = 'more'; btn.textContent = 'more';
+  btn.setAttribute('aria-expanded', 'false');
+  p.after(btn);
+  function toggle() {
+    var open = p.classList.toggle('open');
+    btn.textContent = open ? 'less' : 'more';
+    btn.setAttribute('aria-expanded', open);
+  }
+  btn.addEventListener('click', toggle);
+  p.addEventListener('click', toggle);
+});
 </script>
 <script src="characters.js"></script>
 <script src="fourier.js"></script>
